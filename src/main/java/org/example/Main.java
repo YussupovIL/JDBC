@@ -40,17 +40,26 @@ public class Main {
 //                            "DELETE from employees WHERE  last_name = 'Jackson' AND first_name = 'sam'");
 
             //prepared statements
-            myStmt = myConn.prepareStatement("SELECT * from employees WHERE salary > ? and department=?");
-            myStmt.setDouble(1,40000);
-            myStmt.setString(2,"IT");
-            myRs = myStmt.executeQuery();
+//            myStmt = myConn.prepareStatement("SELECT * from employees WHERE salary > ? and department=?");
+//            myStmt.setDouble(1,40000);
+//            myStmt.setString(2,"IT");
+//            myRs = myStmt.executeQuery();
+//
+//            //myRs = myStmt.executeQuery("select * from employees order by last_name");
+//
+//            //process result set
+//            while (myRs.next()){
+//                System.out.println(myRs.getString("first_name") + " " + myRs.getString("last_name") + " " + myRs.getString("department") +  " " + myRs.getString("salary"));
+//            }
 
-            //myRs = myStmt.executeQuery("select * from employees order by last_name");
+            //CALLING STORED PROCEDURES
+            myStmt = myConn.prepareCall("{call increase_salary_by_department(?,?)}");
+            myStmt.setString(1,"IT");
+            myStmt.setInt(2,1000);
+            myStmt.execute();
 
-            //process result set
-            while (myRs.next()){
-                System.out.println(myRs.getString("first_name") + " " + myRs.getString("last_name") + " " + myRs.getString("department") +  " " + myRs.getString("salary"));
-            }
+
+
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();
         }
